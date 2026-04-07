@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "./lib/supabaseClient";
+
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Skills from "./components/Skills";
@@ -12,35 +14,67 @@ import AdminDashboard from "./components/AdminDashboard";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  const [isAdmin, setAdmin] = useState(false); // tracks if admin logged in
+  const [isAdmin, setAdmin] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  // Restore admin session on page refresh
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) setAdmin(true);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setAdmin(!!session);
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
 
   return (
     <div className={darkMode ? "dark" : ""}>
       <div className="min-h-screen transition-colors duration-500 bg-[var(--bg)] text-[var(--text)]">
-        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
 
-        {/* Show Admin Login modal if admin not logged in */}
-        {!isAdmin && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-50">
-            <AdminLogin setAdmin={setAdmin} />
+        {/* Admin Login Modal */}
+        {showLoginModal && !isAdmin && (
+          <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-[100] px-4">
+            <div className="relative">
+              <button
+                onClick={() => setShowLoginModal(false)}
+                className="absolute -top-10 right-0 text-white hover:text-[var(--accent)] text-sm"
+              >
+                ✕ Close
+              </button>
+              <AdminLogin
+                setAdmin={setAdmin}
+                onClose={() => setShowLoginModal(false)}
+              />
+            </div>
           </div>
         )}
 
-        {/* Show Admin Dashboard modal if admin logged in */}
+        {/* Admin Dashboard (full screen overlay) */}
         {isAdmin && (
-          <div className="fixed inset-0 bg-black/70 flex justify-center items-start p-10 z-50 overflow-auto">
-            <AdminDashboard />
+          <div className="fixed inset-0 z-[200] overflow-auto">
+            <AdminDashboard setAdmin={setAdmin} />
           </div>
         )}
 
-        {/* PUBLIC portfolio components */}
-        <Hero />
-        <Skills />
-        <Projects />
-        <Certificates />
-        <Resume />
-        <Contact />
-        <Footer />
+        {/* Public Portfolio */}
+        <div className={isAdmin ? "invisible" : ""}>
+          <Navbar
+            darkMode={darkMode}
+            setDarkMode={setDarkMode}
+            onLoginClick={() => setShowLoginModal(true)}
+          />
+          <Hero />
+          <Skills />
+          <Projects />
+          <Certificates />
+          <Resume />
+          <Contact />
+          <Footer />
+        </div>
+
       </div>
     </div>
   );
