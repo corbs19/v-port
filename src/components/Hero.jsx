@@ -2,27 +2,17 @@ export default function Hero() {
   return (
     <section
       id="about"
-      className="flex flex-col items-center justify-center text-center py-32 px-4 bg-[var(--bg)] transition-colors duration-500"
+      className="flex flex-col items-center justify-center text-center py-24 px-6 bg-[var(--bg)] transition-colors duration-500 w-full"
     >
-      <h1 className="text-5xl font-bold mb-4 text-[var(--text-h)]">
-        Hi, I'm <span className="text-[var(--accent)]">Corby</span>
+      <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[var(--text-h)] leading-tight">
+       <span className="text-blue3600">Vanise Corby D. Maniapao</span>
       </h1>
-      <p className="text-lg max-w-xl mb-8 text-[var(--text)]">
-        I'm a passionate developer creating clean, modern, and interactive web experiences.
+      <p className="max-w-[600px] text-center leading-7">
+        I am a motivated web developer focused on creating clean, modern, and interactive web experiences.
+        With a strong understanding of basic web technologies, I build responsive and visually appealing
+        websites that prioritize usability and performance.
       </p>
-      <div className="flex gap-4">
-        <a
-          href="#projects"
-          className="px-6 py-3 bg-[var(--accent)] text-white rounded-lg hover:opacity-90 transition-opacity"
-        >
-          See My Work
-        </a>
-        <a
-          href="#contact"
-          className="px-6 py-3 border border-[var(--accent)] text-[var(--accent)] rounded-lg hover:bg-[var(--accent)] hover:text-white transition-colors"
-        >
-          Contact Me
-        </a>
+      <div className="flex flex-wrap justify-center gap-4">
       </div>
     </section>
   );

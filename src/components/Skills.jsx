@@ -13,7 +13,6 @@ export default function Skills() {
     async function fetchSkills() {
       const { data, error } = await supabase.from("skills").select("*");
       if (error || !data || data.length === 0) {
-        // Fall back to static list if DB is empty or errors
         setSkills(STATIC_SKILLS.map((name, i) => ({ id: i, name })));
       } else {
         setSkills(data);
@@ -25,18 +24,33 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="py-20 px-4 bg-[var(--bg-secondary)] transition-colors duration-500"
+      className="py-20 px-6 bg-[var(--bg-secondary)] transition-colors duration-500 w-full"
     >
       <h2 className="text-3xl font-bold text-center mb-12 text-[var(--text-h)]">
-        My Skills
+        Technologies & Tools
       </h2>
       <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
         {skills.map((skill) => (
           <div
             key={skill.id}
-            className="bg-white dark:bg-gray-900 text-[var(--text)] dark:text-white px-6 py-3 rounded-lg shadow-md hover:scale-105 hover:text-[var(--accent)] transition-all cursor-default"
+            className="skill-card bg-white dark:bg-gray-800 text-[var(--text)] dark:text-white px-5 py-3 rounded-xl shadow-md cursor-default flex flex-col items-center gap-2 w-28"
           >
-            {skill.name}
+            {/* Icon */}
+            {skill.icon_url && (
+              <img
+                src={skill.icon_url}
+                alt={skill.name}
+                className="w-10 h-10 object-contain"
+              />
+            )}
+
+            {/* Name */}
+            <span className="text-sm font-medium text-center">{skill.name}</span>
+
+            {/* Category */}
+            {skill.category && (
+              <span className="text-xs text-gray-400 text-center">{skill.category}</span>
+            )}
           </div>
         ))}
       </div>

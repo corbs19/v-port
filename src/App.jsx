@@ -60,7 +60,7 @@ function App() {
         )}
 
         {/* Public Portfolio */}
-        <div className={isAdmin ? "invisible" : ""}>
+        <div className={isAdmin ? "invisible" : "pt-16"}>
           <Navbar
             darkMode={darkMode}
             setDarkMode={setDarkMode}
