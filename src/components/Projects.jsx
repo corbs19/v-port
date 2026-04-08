@@ -24,7 +24,25 @@ export default function Projects() {
 
   return (
     <section id="projects" className="py-20 px-4 bg-[var(--bg)] transition-colors duration-500">
-      <h2 className="text-3xl font-bold text-center mb-12 text-[var(--text-h)]">Projects</h2>
+      {/* Title - Margin Bottom 0 */}
+<h2
+  className="text-3xl md:text-4xl font-bold text-center mb-0" 
+  style={{ 
+    color: "var(--text-h)",
+    lineHeight: "1.2" // Tightens the invisible box around the text
+  }}
+>
+  Projects
+</h2>
+
+{/* The Line - Tiny Margin Top to bring it closer */}
+<div
+  className="w-16 h-1 rounded-full mx-auto mb-12"
+  style={{ 
+    background: "var(--accent)",
+    marginTop: "4px" // Adjust this number (2px, 4px, 6px) to get the exact look
+  }}
+/>
 
       {loading && (
         <p className="text-center text-[var(--text)]">Loading projects...</p>

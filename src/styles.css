@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @tailwind utilities;
 
-/* ── Prevent horizontal scroll / white space on mobile ── */
+/* ── Prevent horizontal scroll ── */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -21,54 +21,70 @@ html, body {
 
 /* ── CSS Variables ── */
 :root {
-  --text: #000000;
-  --text-h: #433830;
-  --accent: #a0522d;
-  --bg: #fdf6ee;
-  --bg-secondary: #f0e6d3;
-  --nav-bg: #3b1f0a;
-  --nav-text: #fdf6ee;
-  --glow-color: #c8a882;
-  --card-bg: #fff8f0;
-  --border: #d4b896;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
+  /* LIGHT MODE (Warm Cream & Espresso) */
+  --bg: #f5ede0;
+  --text: #2c1500;           /* Dark espresso for body */
+  --text-h: #1a0d05;         /* Near black for headings */
+  --text-muted: #6b4226;     /* Muted cocoa for descriptions */
+  --accent: #8B5E3C;         /* Warm brown */
+  --glow-color: rgba(139, 94, 60, 0.3); /* Soft brown glow */
+  --nav-text: #1a0d05;
+  --bg-secondary: rgba(210,180,140,0.4);
 }
 
 .dark {
-  --text: #9e9285;
-  --text-h: #ffffff;
-  --accent: #c8845a;
-  --bg: #01000097;
-  --bg-secondary: #382e26;
-  --nav-bg: #120b05;
-  --nav-text: #e8d5c0;
-  --glow-color: #7a4a2a;
-  --card-bg: #2a1a0e;
-  --border: #4a2e1a;
+  /* DARK MODE (Deep Espresso & Amber) */
+  --bg: #100800;
+  --text: #f5ede0;           /* Cream white for body */
+  --text-h: #fdf6ec;         /* Bright cream for headings */
+  --text-muted: rgba(245, 237, 224, 0.6);
+  --accent: #d4956a;         /* Cinnamon amber */
+  --glow-color: #c8956c;     /* Strong amber glow */
+  --nav-text: #f5ede0;
+  --bg-secondary: rgba(90,50,20,0.35);
 }
 
-/* ── Text Glow ── */
-h1, h2 {
+body {
+  /* Use the variable so it actually changes background */
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* ── Typography Application ── */
+h1, h2, h3, h4 {
+  color: var(--text-h);
+  /* Apply glow effect only when it's appropriate (mostly dark mode) */
+}
+
+.dark h1, .dark h2 {
   text-shadow:
     0 0 10px var(--glow-color),
-    0 0 20px var(--glow-color),
-    0 0 40px var(--glow-color);
+    0 0 25px rgba(200, 149, 108, 0.4);
 }
 
-/* ── Skill Card Glow ── */
+p, li, span:not(.no-style) {
+  color: var(--text-muted);
+}
+
+/* ── Skill card ── */
 .skill-card {
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  background: var(--bg-secondary) !important;
+  border: 1px solid rgba(200, 149, 108, 0.3);
+  color: var(--text) !important;
+  transition: all 0.3s ease;
 }
 
 .skill-card:hover {
-  box-shadow:
-    0 0 10px var(--glow-color),
-    0 0 25px var(--glow-color),
-    0 0 50px var(--glow-color);
-  transform: scale(1.08);
+  box-shadow: 0 0 20px var(--glow-color);
+  border-color: var(--accent);
+}
+
+/* ── Full screen sections ── */
+section {
+  background: transparent !important;
+}
+
+footer, nav {
+  background-color: transparent !important;
 }

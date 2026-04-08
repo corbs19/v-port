@@ -30,7 +30,25 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-20 px-4 bg-[var(--bg-secondary)] transition-colors duration-500">
-      <h2 className="text-3xl font-bold text-center mb-12 text-[var(--text-h)]">Contact Me</h2>
+      {/* Title - Margin Bottom 0 */}
+<h2
+  className="text-3xl md:text-4xl font-bold text-center mb-0" 
+  style={{ 
+    color: "var(--text-h)",
+    lineHeight: "1.2" // Tightens the invisible box around the text
+  }}
+>
+  Contact
+</h2>
+
+{/* The Line - Tiny Margin Top to bring it closer */}
+<div
+  className="w-16 h-1 rounded-full mx-auto mb-12"
+  style={{ 
+    background: "var(--accent)",
+    marginTop: "4px" // Adjust this number (2px, 4px, 6px) to get the exact look
+  }}
+/>
       <div className="max-w-xl mx-auto">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input name="name" type="text" placeholder="Your Name" value={form.name} onChange={handleChange} required
