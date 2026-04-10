@@ -29,7 +29,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 px-4 bg-[var(--bg-secondary)] transition-colors duration-500">
+    <section id="contact" className="py-20 px-4 bg-[var(--bg-secondary)] transition-colors duration-500" style={{ scrollMarginTop: "70px" }}>
       {/* Title - Margin Bottom 0 */}
 <h2
   className="text-3xl md:text-4xl font-bold text-center mb-0" 

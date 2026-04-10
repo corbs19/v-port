@@ -7,7 +7,7 @@ import Hero from "./components/Hero";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Certificates from "./components/Certificates";
-import AllCertificates from "./components/AllCertificates"; // Adjusted path based on your error log
+import AllCertificates from "./components/AllCertificates";
 import Resume from "./components/Resume";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -36,44 +36,65 @@ function App() {
     <BrowserRouter>
       <div className={darkMode ? "dark" : ""}>
         <div className="relative min-h-screen transition-colors duration-500 bg-[var(--bg)] text-[var(--text)]">
+          
+          {/* Background Layer (z-0) */}
           <ParticleBackground />
-          <div className="relative" style={{ zIndex: 1 }}>
+          
+          {/* Content Layer (z-10) */}
+          <div className="relative z-10">
             
+            {/* Modals & Admin Overlays (Highest z-index) */}
             {showLoginModal && !isAdmin && (
-              <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-[100] px-4">
+              <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-[200] px-4">
                 <AdminLogin setAdmin={setAdmin} onClose={() => setShowLoginModal(false)} />
               </div>
             )}
 
-            {isAdmin && (
-              <div className="fixed inset-0 z-[200] overflow-auto">
+            {isAdmin ? (
+              <div className="fixed inset-0 z-[300] overflow-auto bg-[var(--bg)]">
                 <AdminDashboard setAdmin={setAdmin} />
               </div>
+            ) : (
+              <>
+                {/* Regular Site View */}
+                <Navbar
+                  darkMode={darkMode}
+                  setDarkMode={setDarkMode}
+                  onLoginClick={() => setShowLoginModal(true)}
+                />
+                
+                <Routes>
+                  <Route path="/" element={
+                    <main>
+                      <Hero />
+                      
+                      {/* Anchor Targets defined here for maximum reliability */}
+                      <section id="certificates">
+                        <Certificates />
+                      </section>
+
+                      <section id="skills">
+                        <Skills />
+                      </section>
+
+                      <section id="projects">
+                        <Projects />
+                      </section>
+
+                      <Resume />
+
+                      <section id="contact">
+                        <Contact />
+                      </section>
+                    </main>
+                  } />
+                  
+                  <Route path="/all-certificates" element={<AllCertificates />} />
+                </Routes>
+
+                <Footer />
+              </>
             )}
-
-            <div className={isAdmin ? "invisible" : ""}>
-              <Navbar
-                darkMode={darkMode}
-                setDarkMode={setDarkMode}
-                onLoginClick={() => setShowLoginModal(true)}
-              />
-              
-              <Routes>
-                <Route path="/" element={
-                  <>
-                    <Hero />
-                    <Certificates />
-                    <Skills />
-                    <Projects /> {/* Ensure this component has id="projects" */}
-                    <Resume />
-                    <Contact />
-                  </>
-                } />
-                <Route path="/all-certificates" element={<AllCertificates />} />
-              </Routes>
-
-              <Footer />
-            </div>
           </div>
         </div>
       </div>

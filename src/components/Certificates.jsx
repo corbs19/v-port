@@ -28,7 +28,7 @@ export default function Certificates() {
     <section
       id="certificates"
       className="min-h-screen w-full py-20 px-6 md:px-12 flex items-center transition-colors duration-500"
-      style={{ background: "var(--bg-secondary)" }}
+      style={{ background: "var(--bg-secondary)", scrollMarginTop: "70px" }}
     >
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-3 gap-16 items-start">
         

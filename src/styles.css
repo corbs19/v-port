@@ -88,3 +88,10 @@ section {
 footer, nav {
   background-color: transparent !important;
 }
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  scroll-margin-top: 70px;
+}

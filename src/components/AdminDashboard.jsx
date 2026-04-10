@@ -4,10 +4,11 @@ import { supabase } from "../lib/supabaseClient";
 const PROJECT_FIELDS = [
   { key: "title", label: "Title", type: "text" },
   { key: "description", label: "Description", type: "textarea" },
-  { key: "image_url", label: "Project Image", type: "file", bucket: "projects" }, // ← was "project-images"
+  { key: "image_url", label: "Project Image", type: "file", bucket: "projects" },
   { key: "live_url", label: "Live URL", type: "text" },
   { key: "github_url", label: "GitHub URL", type: "text" },
   { key: "tags", label: "Tags (comma-separated)", type: "text" },
+  { key: "pdf_url", label: "Project PDF", type: "file", bucket: "project-pdfs" },
 ];
 
 const SKILL_FIELDS = [
@@ -26,38 +27,6 @@ const CERT_FIELDS = [
   { key: "credential_url", label: "Credential URL", type: "text" },
 ];
 
-// ─── Dropzone component ───────────────────────────────────────────────────────
-function ImageUploadField({ value, onChange }) {
-  const [uploading, setUploading] = useState(false);
-  const [dragOver, setDragOver] = useState(false);
-
-  async function upload(file, bucket) {
-    if (!file) return;
-    setUploading(true);
-    try {
-      const ext = file.name.split(".").pop();
-      const fileName = `${Date.now()}.${ext}`;
-      const { error: uploadError } = await supabase.storage
-        .from(bucket)
-        .upload(fileName, file, { upsert: true });
-      if (uploadError) throw uploadError;
-
-      const { data: urlData } = supabase.storage
-        .from(bucket)
-        .getPublicUrl(fileName);
-
-      onChange(urlData.publicUrl);
-    } catch (err) {
-      alert("Upload failed: " + err.message);
-    } finally {
-      setUploading(false);
-    }
-  }
-
-  return null; // placeholder — used inside CrudTable below
-}
-
-// ─── Generic CRUD Table ───────────────────────────────────────────────────────
 function CrudTable({ tableName, fields, label }) {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,7 +65,7 @@ function CrudTable({ tableName, fields, label }) {
 
   async function handleFileUpload(file, rowId, field) {
     if (!file) return;
-    const bucket = field.bucket || "project-images";
+    const bucket = field.bucket || "projects";
     setUploading((prev) => ({ ...prev, [`${rowId}-${field.key}`]: true }));
     try {
       const ext = file.name.split(".").pop();
@@ -180,7 +149,6 @@ function CrudTable({ tableName, fields, label }) {
 
                   ) : field.type === "file" ? (
                     <div className="flex flex-col gap-2">
-                      {/* Dropzone */}
                       <div
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={(e) => {
@@ -204,33 +172,50 @@ function CrudTable({ tableName, fields, label }) {
                           </p>
                         ) : row[field.key] ? (
                           <>
-                            <img
-                              src={row[field.key]}
-                              alt="preview"
-                              className="w-full rounded-xl object-cover"
-                              style={{ maxHeight: "160px" }}
-                            />
-                            <div
-                              className="absolute inset-0 flex items-center justify-center rounded-xl opacity-0 hover:opacity-100 transition-opacity"
-                              style={{ background: "rgba(0,0,0,0.55)" }}
-                            >
-                              <span
-                                className="text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
-                                style={{ background: "var(--accent)", color: "#fff" }}
+                            {field.key === "pdf_url" ? (
+                              <div
+                                className="w-full rounded-xl flex items-center justify-center gap-3 py-4 cursor-pointer"
+                                style={{ background: "rgba(255,255,255,0.04)" }}
                               >
-                                Replace Image
-                              </span>
-                            </div>
+                                <span style={{ fontSize: "28px" }}>📄</span>
+                                <div>
+                                  <p className="text-xs font-bold" style={{ color: "var(--accent)" }}>PDF Uploaded</p>
+                                  <p className="text-[10px]" style={{ color: "var(--text-muted)" }}>Click to replace</p>
+                                </div>
+                              </div>
+                            ) : (
+                              <>
+                                <img
+                                  src={row[field.key]}
+                                  alt="preview"
+                                  className="w-full rounded-xl object-cover"
+                                  style={{ maxHeight: "160px" }}
+                                />
+                                <div
+                                  className="absolute inset-0 flex items-center justify-center rounded-xl opacity-0 hover:opacity-100 transition-opacity"
+                                  style={{ background: "rgba(0,0,0,0.55)" }}
+                                >
+                                  <span
+                                    className="text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
+                                    style={{ background: "var(--accent)", color: "#fff" }}
+                                  >
+                                    Replace Image
+                                  </span>
+                                </div>
+                              </>
+                            )}
                           </>
                         ) : (
                           <div className="flex flex-col items-center gap-1 pointer-events-none">
-                            <span style={{ fontSize: "24px", opacity: 0.35 }}>🖼</span>
+                            <span style={{ fontSize: "24px", opacity: 0.35 }}>
+                              {field.key === "pdf_url" ? "📄" : "🖼"}
+                            </span>
                             <p className="text-[11px] text-center" style={{ color: "var(--text-muted)", lineHeight: 1.6 }}>
                               Drag & drop or{" "}
                               <span style={{ color: "var(--accent)" }}>click to browse</span>
                             </p>
                             <p className="text-[9px]" style={{ color: "var(--text-muted)", opacity: 0.5 }}>
-                              PNG · JPG · WEBP
+                              {field.key === "pdf_url" ? "PDF" : "PNG · JPG · WEBP"}
                             </p>
                           </div>
                         )}
@@ -239,7 +224,7 @@ function CrudTable({ tableName, fields, label }) {
                       <input
                         id={`file-${row.id}-${field.key}`}
                         type="file"
-                        accept="image/*"
+                        accept={field.key === "pdf_url" ? "application/pdf" : "image/*"}
                         className="hidden"
                         onChange={(e) => handleFileUpload(e.target.files[0], row.id, field)}
                       />
@@ -295,7 +280,6 @@ function CrudTable({ tableName, fields, label }) {
   );
 }
 
-// ─── Main Dashboard ───────────────────────────────────────────────────────────
 const TABS = ["Projects", "Skills", "Certificates", "Messages"];
 
 export default function AdminDashboard({ setAdmin }) {
@@ -318,7 +302,6 @@ export default function AdminDashboard({ setAdmin }) {
       style={{ background: "var(--bg, #0f0d0b)", color: "var(--text-h, #f5f0e8)" }}
     >
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <div className="flex justify-between items-center mb-10">
           <div>
             <p
@@ -347,7 +330,6 @@ export default function AdminDashboard({ setAdmin }) {
           </button>
         </div>
 
-        {/* Tabs */}
         <div
           className="flex gap-1 mb-8 p-1 rounded-xl w-fit"
           style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(200,149,108,0.1)" }}
@@ -367,7 +349,6 @@ export default function AdminDashboard({ setAdmin }) {
           ))}
         </div>
 
-        {/* Tab content */}
         {activeTab === "Projects" && (
           <CrudTable tableName="projects" fields={PROJECT_FIELDS} label="Projects" />
         )}

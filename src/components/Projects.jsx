@@ -8,7 +8,7 @@ export default function Projects() {
   useEffect(() => {
     async function fetchProjects() {
       const { data, error } = await supabase
-        .from("projects") // lowercase — match your Supabase table name exactly
+        .from("projects")
         .select("*")
         .order("created_at", { ascending: false });
 
@@ -23,85 +23,161 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="projects" className="py-20 px-4 bg-[var(--bg)] transition-colors duration-500">
-      {/* Title - Margin Bottom 0 */}
-<h2
-  className="text-3xl md:text-4xl font-bold text-center mb-0" 
-  style={{ 
-    color: "var(--text-h)",
-    lineHeight: "1.2" // Tightens the invisible box around the text
-  }}
->
-  Projects
-</h2>
-
-{/* The Line - Tiny Margin Top to bring it closer */}
-<div
-  className="w-16 h-1 rounded-full mx-auto mb-12"
-  style={{ 
-    background: "var(--accent)",
-    marginTop: "4px" // Adjust this number (2px, 4px, 6px) to get the exact look
-  }}
-/>
+    <section
+      id="projects"
+      className="py-20 px-4 transition-colors duration-500"
+      style={{ background: "var(--bg)", scrollMarginTop: "70px" }}
+    >
+      <h2
+        className="text-3xl md:text-4xl font-bold text-center mb-0"
+        style={{ color: "var(--text-h)", lineHeight: "1.2" }}
+      >
+        Projects
+      </h2>
+      <div
+        className="w-16 h-1 rounded-full mx-auto mb-12"
+        style={{ background: "var(--accent)", marginTop: "4px" }}
+      />
 
       {loading && (
-        <p className="text-center text-[var(--text)]">Loading projects...</p>
+        <p className="text-center" style={{ color: "var(--text)" }}>
+          Loading projects...
+        </p>
       )}
-
       {!loading && projects.length === 0 && (
-        <p className="text-center text-[var(--text)]">No projects yet. Check back soon!</p>
+        <p className="text-center" style={{ color: "var(--text)" }}>
+          No projects yet. Check back soon!
+        </p>
       )}
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
         {projects.map((project) => (
           <div
             key={project.id}
-            className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col"
+            className="rounded-xl flex flex-col overflow-hidden transition-all duration-300 group"
+            style={{
+              background: "rgba(200,149,108,0.07)",
+              border: "1px solid rgba(200,149,108,0.2)",
+              boxShadow: "0 2px 12px rgba(120,80,40,0.06)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = "0 6px 24px rgba(120,80,40,0.15)";
+              e.currentTarget.style.borderColor = "rgba(200,149,108,0.5)";
+              e.currentTarget.style.transform = "translateY(-3px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = "0 2px 12px rgba(120,80,40,0.06)";
+              e.currentTarget.style.borderColor = "rgba(200,149,108,0.2)";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
           >
-            {project.image_url && (
-              <img
-                src={project.image_url}
-                alt={project.title}
-                className="w-full h-40 object-cover rounded-lg mb-4"
+            {/* Square image */}
+            <div
+              className="w-full overflow-hidden"
+              style={{ aspectRatio: "1 / 1" }}
+            >
+              {project.image_url ? (
+                <img
+                  src={project.image_url}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              ) : (
+                <div
+                  className="w-full h-full flex items-center justify-center"
+                  style={{ background: "rgba(200,149,108,0.1)" }}
+                >
+                  <span style={{ fontSize: "32px", opacity: 0.3 }}>🖼</span>
+                </div>
+              )}
+            </div>
+
+            {/* Card body */}
+            <div className="p-4 flex flex-col flex-1">
+              <h3
+                className="text-sm font-bold mb-1 leading-tight"
+                style={{ color: "var(--accent)" }}
+              >
+                {project.title}
+              </h3>
+              <p
+                className="text-xs mb-3 flex-1"
+                style={{
+                  color: "var(--text)",
+                  lineHeight: 1.6,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                {project.description}
+              </p>
+
+              {/* Tags */}
+              {project.tags && project.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {project.tags.slice(0, 3).map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] px-2 py-0.5 rounded-full font-medium"
+                      style={{
+                        background: "rgba(200,149,108,0.12)",
+                        color: "var(--accent)",
+                        border: "1px solid rgba(200,149,108,0.2)",
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* Divider */}
+              <div
+                className="mb-4"
+                style={{
+                  height: "1px",
+                  background: "rgba(200,149,108,0.12)",
+                }}
               />
-            )}
-            <h3 className="text-xl font-semibold mb-2 text-[var(--accent)]">
-              {project.title}
-            </h3>
-            <p className="mb-4 text-[var(--text)] flex-1">{project.description}</p>
-            {project.tags && (
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-full"
+
+              {/* Links - COLUMN LAYOUT */}
+              <div className="flex flex-col gap-2.5">
+                {project.live_url && (
+                  <a
+                    href={project.live_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-bold uppercase tracking-widest transition-opacity hover:opacity-60 w-fit"
+                    style={{ color: "var(--accent)" }}
                   >
-                    {tag}
-                  </span>
-                ))}
+                    Live Demo →
+                  </a>
+                )}
+                {project.pdf_url && (
+                  <a
+                    href={project.pdf_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-bold uppercase tracking-widest transition-opacity hover:opacity-60 w-fit"
+                    style={{ color: "var(--accent)" }}
+                  >
+                    View File →
+                  </a>
+                )}
+                {project.github_url && (
+                  <a
+                    href={project.github_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-medium uppercase tracking-widest transition-opacity hover:opacity-60 w-fit"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    GitHub →
+                  </a>
+                )}
               </div>
-            )}
-            <div className="flex gap-4 mt-auto">
-              {project.live_url && (
-                <a
-                  href={project.live_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--accent)] font-medium hover:underline"
-                >
-                  Live Demo →
-                </a>
-              )}
-              {project.github_url && (
-                <a
-                  href={project.github_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--text)] hover:text-[var(--accent)] hover:underline"
-                >
-                  GitHub
-                </a>
-              )}
             </div>
           </div>
         ))}

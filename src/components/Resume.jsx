@@ -3,7 +3,7 @@ export default function Resume() {
     <section
       id="resume"
       className="py-20 px-4 transition-colors duration-500 text-center"
-      style={{ background: "transparent" }} // Let the App.jsx handle the background
+      style={{ background: "transparent",  scrollMarginTop: "70px" }} // Let the App.jsx handle the background
     >
       {/* Title - Clean & Tight */}
       <h2
@@ -27,7 +27,7 @@ export default function Resume() {
 
       <p 
         className="mb-10 max-w-md mx-auto leading-relaxed" 
-        style={{ color: "var(--text-muted)" }}
+        style={{ color: "var(--text-muted)", fontSize: "21px" }}
       >
         Download my resume to see my full experience, education, and skills.
       </p>

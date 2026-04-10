@@ -32,6 +32,7 @@ export default function Hero() {
       style={{
         minHeight: "100vh",
         background: "transparent",
+        scrollMarginTop: "70px",
       }}
     >
       <div className="max-w-xl z-10">
