@@ -43,12 +43,12 @@ export default function Certificates() {
               style={{ color: "var(--text-h)", lineHeight: "1.1" }}
             >
               My <br />
-              <span style={{ color: "var(--accent)" }}>Certificates</span>
+              <span style={{ color: "var(--accent)" }}>Certificates & Badges</span> 
             </h2>
           </div>
           
           <p className="text-base leading-relaxed" style={{ color: "var(--text)" }}>
-            A collection of professional certifications and course completions 
+            A collection of professional badges, certifications and course completions 
             showcasing my continuous learning and technical expertise.
           </p>
 
