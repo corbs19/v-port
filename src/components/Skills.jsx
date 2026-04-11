@@ -239,8 +239,8 @@ export default function Skills() {
         /* ── Sticky left panel ── */
         #skills-panel {
           flex-shrink: 0;
-          width: 450px;
-          min-width: 450px;
+          width: 500px;
+          min-width: 500px;
           padding: 80px 32px 80px 48px;
           position: sticky;
           top: 0;

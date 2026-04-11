@@ -38,13 +38,20 @@ export default function Certificates() {
             <h4 className="italic text-xl" style={{ color: "var(--accent)", opacity: 0.8 }}>
               Check Out
             </h4>
-            <h2 
-              className="text-5xl font-bold tracking-tight uppercase" 
-              style={{ color: "var(--text-h)", lineHeight: "1.1" }}
-            >
-              My <br />
-              <span style={{ color: "var(--accent)" }}>Certificates & Badges</span> 
+           <h2 style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: "clamp(36px, 3vw, 56px)",
+              fontWeight: 900, lineHeight: 0.92, textTransform: "uppercase",
+              color: "var(--text-h, #f5f0e8)", margin: "0 0 22px",
+            }}>
+              My Certificates<br />
+              <span style={{ color: "var(--accent, #c8915a)" }}>& Badges</span>
             </h2>
+            <div style={{
+              width: "36px", height: "1px",
+              background: "var(--accent, #c8915a)", opacity: 0.35,
+              margin: "0 0 18px",
+            }} />
           </div>
           
           <p className="text-base leading-relaxed" style={{ color: "var(--text)" }}>

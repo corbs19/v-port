@@ -25,15 +25,22 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="py-20 px-4 transition-colors duration-500"
+      className="py-20 px-4 transition-colors duration-500, text-center"
       style={{ background: "var(--bg)", scrollMarginTop: "70px" }}
     >
-      <h2
-        className="text-3xl md:text-4xl font-bold text-center mb-0"
-        style={{ color: "var(--text-h)", lineHeight: "1.2" }}
-      >
-        Projects
-      </h2>
+      <h2 style={{
+        
+              fontFamily: "'Cormorant Garamond', Georgia,serif",
+              fontSize: "clamp(36px, 3vw, 56px)",
+              fontWeight: 900, lineHeight: 0.92, textTransform: "uppercase",
+              color: "var(--text-h, #f5f0e8)", margin: "0 0 22px",
+            }}>
+              Projects<br />
+            </h2>
+            <div style={{
+              width: "36px", height: "0px",
+              background: "var(--accent, #c8915a)", opacity: 0.35,
+            }} />
       <div
         className="w-16 h-1 rounded-full mx-auto mb-12"
         style={{ background: "var(--accent)", marginTop: "4px" }}

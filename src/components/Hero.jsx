@@ -41,17 +41,17 @@ export default function Hero() {
         </p>
 
         <h1
-          className="text-5xl md:text-6xl font-bold leading-tight mb-3 transition-colors duration-500"
-          style={{ color: "var(--text-h)" }} // Swapped from #ffffff
+          className="text-2xl md:text-3xl font-bold leading-tight mb-3 transition-colors duration-500"
+          style={{ color: "var(--text-h)", fontFamily: "'Cormorant Garamond', Georgia,serif" }}
         >
           Hi, I'm{" "}
           <span style={{ color: "var(--accent)" }}>
-            Vanise Corby
+            Vanise Corby D. Maniapao
           </span>
         </h1>
 
         <h2
-          className="text-2xl md:text-3xl font-semibold mb-6 flex items-center gap-2 transition-colors duration-500"
+          className="text-xl md:text-xl font-semibold mb-6 flex items-center gap-2 transition-colors duration-500"
           style={{ color: "var(--text)", textShadow: "none" }}
         >
           {displayed}
@@ -69,7 +69,7 @@ export default function Hero() {
 
         <p
           className="leading-7 mb-10 text-sm md:text-base max-w-md transition-colors duration-500"
-          style={{ color: "var(--text-muted)" }} // Swapped from #1a0f00
+          style={{ color: "var(--text-muted)" }}
         >
           A motivated web developer focused on creating clean, modern, and
           interactive web experiences. I build responsive, visually appealing
@@ -82,54 +82,64 @@ export default function Hero() {
             className="px-7 py-3 rounded-md font-semibold text-sm transition-all duration-300"
             style={{
               background: "var(--accent)",
-              color: "var(--bg)", // Text inside button uses the background color for contrast
+              color: "var(--bg)",
             }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = "0 0 30px var(--glow-color)"}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = "0 0 25px var(--glow-color)";
+              e.currentTarget.style.transform = "translateY(-2px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = "0 0 15px";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
           >
             Hire Me
           </a>
-          
+
           <a
-  href="#resume" // This tells the browser to look for id="resume"
-  className="px-7 py-3 rounded-md font-semibold text-sm transition-all duration-300"
-  style={{
-    border: "1px solid var(--accent)",
-    color: "var(--text-h)",
-    background: "var(--bg-secondary)",
-  }}
-  onMouseEnter={e => {
-    e.currentTarget.style.background = "var(--accent)";
-    e.currentTarget.style.color = "var(--bg)"; // Swaps text color for contrast
-  }}
-  onMouseLeave={e => {
-    e.currentTarget.style.background = "var(--bg-secondary)";
-    e.currentTarget.style.color = "var(--text-h)";
-  }}
->
-  My CV
-</a>
+            href="#resume"
+            className="px-7 py-3 rounded-md font-semibold text-sm transition-all duration-300"
+            style={{
+              border: "1px solid var(--accent)",
+              color: "var(--text-h)",
+              background: "var(--bg-secondary)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--accent)";
+              e.currentTarget.style.color = "var(--bg)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "var(--bg-secondary)";
+              e.currentTarget.style.color = "var(--text-h)";
+            }}
+          >
+            My CV
+          </a>
         </div>
 
+        {/* ── Social Links ── */}
         <div className="flex gap-4 mt-10">
           {[
-            { label: "GH", href: "#" },
-            { label: "IG", href: "#" },
-            { label: "LI", href: "#" },
+            { label: "FB", href: "https://www.facebook.com/share/1bWFLKZK7q/" },
+            { label: "IG", href: "https://www.instagram.com/vmaniapa0?igsh=MXh0ZDV5bzZqZDlvZQ==" },
+            { label: "TG", href: "https://t.me/vcorbs" },
           ].map(({ label, href }) => (
             <a
               key={label}
               href={href}
+              target="_blank"
+              rel="noreferrer"
               className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300"
               style={{
                 border: "1px solid var(--accent)",
-                color: "var(--text-h)", // Swapped from #fff
+                color: "var(--text-h)",
               }}
-              onMouseEnter={e => {
+              onMouseEnter={(e) => {
                 e.currentTarget.style.background = "var(--accent)";
                 e.currentTarget.style.color = "var(--bg)";
                 e.currentTarget.style.boxShadow = "0 0 12px var(--glow-color)";
               }}
-              onMouseLeave={e => {
+              onMouseLeave={(e) => {
                 e.currentTarget.style.background = "transparent";
                 e.currentTarget.style.color = "var(--text-h)";
                 e.currentTarget.style.boxShadow = "none";
