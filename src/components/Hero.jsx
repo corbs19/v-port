@@ -28,21 +28,34 @@ export default function Hero() {
   return (
     <section
       id="about"
-      className="relative flex flex-col items-start justify-center px-12 md:px-24"
+      className="hero-container"
       style={{
         minHeight: "100vh",
         background: "transparent",
         scrollMarginTop: "70px",
+        display: "flex",
+        alignItems: "center",
+        /* Center both elements together */
+        justifyContent: "center",
+        /* Controlled gap between text and image */
+        gap: "4rem", 
+        boxSizing: "border-box",
+        width: "100%",
+        overflow: "hidden",
       }}
     >
-      <div className="max-w-xl z-10">
-        <p className="text-sm tracking-widest uppercase mb-4" style={{ color: "var(--text-muted)" }}>
+      {/* ── Left: Text Content ── */}
+      <div className="hero-text-content" style={{ flex: "0 1 auto", minWidth: 0, zIndex: 10 }}>
+        <p
+          className="text-sm tracking-widest uppercase mb-4"
+          style={{ color: "var(--text-muted)" }}
+        >
           Welcome to my portfolio
         </p>
 
         <h1
-          className="text-2xl md:text-3xl font-bold leading-tight mb-3 transition-colors duration-500"
-          style={{ color: "var(--text-h)", fontFamily: "'Cormorant Garamond', Georgia,serif" }}
+          className="text-xl md:text-4xl font-bold leading-tight mb-3 transition-colors duration-500"
+          style={{ color: "var(--text-h)", fontFamily: "'VT323', monospace" }}
         >
           Hi, I'm{" "}
           <span style={{ color: "var(--accent)" }}>
@@ -51,8 +64,8 @@ export default function Hero() {
         </h1>
 
         <h2
-          className="text-xl md:text-xl font-semibold mb-6 flex items-center gap-2 transition-colors duration-500"
-          style={{ color: "var(--text)", textShadow: "none" }}
+          className="text-xl font-semibold mb-6 flex items-center gap-2 transition-colors duration-500 role-text"
+          style={{ color: "var(--text)", textShadow: "none", fontFamily: "'Share Tech Mono', monospace" }}
         >
           {displayed}
           <span
@@ -60,7 +73,7 @@ export default function Hero() {
               display: "inline-block",
               width: "2px",
               height: "1.2em",
-              background: "var(--glow-color)",
+              background: "var(--accent)",
               animation: "blink 0.8s step-end infinite",
               verticalAlign: "middle",
             }}
@@ -68,29 +81,27 @@ export default function Hero() {
         </h2>
 
         <p
-          className="leading-7 mb-10 text-sm md:text-base max-w-md transition-colors duration-500"
-          style={{ color: "var(--text-muted)" }}
+          className="hero-description leading-7 mb-10 text-sm md:text-base transition-colors duration-500"
+          style={{
+            color: "var(--text-muted)",
+            fontFamily: "'Share Tech Mono', monospace",
+            maxWidth: "460px",
+          }}
         >
           A motivated web developer focused on creating clean, modern, and
           interactive web experiences. I build responsive, visually appealing
           websites that prioritize usability and performance.
         </p>
 
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-4 btn-container">
           <a
             href="#contact"
-            className="px-7 py-3 rounded-md font-semibold text-sm transition-all duration-300"
+            className="px-8 py-3 font-semibold text-sm transition-all duration-300"
             style={{
               background: "var(--accent)",
               color: "var(--bg)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = "0 0 25px var(--glow-color)";
-              e.currentTarget.style.transform = "translateY(-2px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = "0 0 15px";
-              e.currentTarget.style.transform = "translateY(0)";
+              fontFamily: "'Share Tech Mono', monospace",
+              clipPath: "polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))",
             }}
           >
             Hire Me
@@ -98,19 +109,13 @@ export default function Hero() {
 
           <a
             href="#resume"
-            className="px-7 py-3 rounded-md font-semibold text-sm transition-all duration-300"
+            className="px-8 py-3 font-semibold text-sm transition-all duration-300"
             style={{
               border: "1px solid var(--accent)",
               color: "var(--text-h)",
               background: "var(--bg-secondary)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "var(--accent)";
-              e.currentTarget.style.color = "var(--bg)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "var(--bg-secondary)";
-              e.currentTarget.style.color = "var(--text-h)";
+              fontFamily: "'Share Tech Mono', monospace",
+              clipPath: "polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))",
             }}
           >
             My CV
@@ -118,7 +123,7 @@ export default function Hero() {
         </div>
 
         {/* ── Social Links ── */}
-        <div className="flex gap-4 mt-10">
+        <div className="flex gap-4 mt-10 social-container">
           {[
             { label: "FB", href: "https://www.facebook.com/share/1bWFLKZK7q/" },
             { label: "IG", href: "https://www.instagram.com/vmaniapa0?igsh=MXh0ZDV5bzZqZDlvZQ==" },
@@ -129,20 +134,12 @@ export default function Hero() {
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300"
+              className="w-10 h-10 flex items-center justify-center text-xs font-bold transition-all duration-300"
               style={{
                 border: "1px solid var(--accent)",
                 color: "var(--text-h)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--accent)";
-                e.currentTarget.style.color = "var(--bg)";
-                e.currentTarget.style.boxShadow = "0 0 12px var(--glow-color)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "var(--text-h)";
-                e.currentTarget.style.boxShadow = "none";
+                fontFamily: "'Share Tech Mono', monospace",
+                clipPath: "polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))",
               }}
             >
               {label}
@@ -151,10 +148,88 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* ── Right: Profile Picture ── */}
+      <div className="hero-image-wrapper" style={{ flex: "0 0 auto", zIndex: 10 }}>
+        <div style={{ position: "relative", width: "320px", height: "360px" }}>
+          
+          {/* Coord labels */}
+          <span style={{ position: "absolute", top: "-1.6rem", left: 0, fontSize: "0.7rem", color: "var(--text-muted)", fontFamily: "'Share Tech Mono', monospace" }}>
+            [0.00, 0.00]
+          </span>
+          <span style={{ position: "absolute", top: "-1.6rem", right: 0, fontSize: "0.7rem", color: "var(--text-muted)", fontFamily: "'Share Tech Mono', monospace" }}>
+            [1.00, 0.00]
+          </span>
+
+          {/* Corner brackets */}
+          <span style={{ position: "absolute", top: 0, left: 0, width: "28px", height: "28px", borderTop: "2px solid var(--accent)", borderLeft: "2px solid var(--accent)", zIndex: 2 }} />
+          <span style={{ position: "absolute", top: 0, right: 0, width: "28px", height: "28px", borderTop: "2px solid var(--accent)", borderRight: "2px solid var(--accent)", zIndex: 2 }} />
+          <span style={{ position: "absolute", bottom: 0, left: 0, width: "28px", height: "28px", borderBottom: "2px solid var(--accent)", borderLeft: "2px solid var(--accent)", zIndex: 2 }} />
+          <span style={{ position: "absolute", bottom: 0, right: 0, width: "28px", height: "28px", borderBottom: "2px solid var(--accent)", borderRight: "2px solid var(--accent)", zIndex: 2 }} />
+
+          {/* Scan sweep line */}
+          <span style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "2px", background: "var(--accent)", opacity: 0.6, zIndex: 3, animation: "scanSweep 3s linear infinite" }} />
+
+          {/* Profile image */}
+          <img
+            src="/corby.jpg"
+            alt="vcdm"
+            style={{ 
+              width: "100%", 
+              height: "100%", 
+              objectFit: "cover", 
+              objectPosition: "top", 
+              display: "block", 
+              filter: "contrast(1.05) brightness(0.97)", 
+              clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))" 
+            }}
+          />
+
+          {/* Status label */}
+          <span style={{ position: "absolute", bottom: "-1.8rem", left: 0, fontSize: "0.75rem", color: "var(--accent)", fontFamily: "'Share Tech Mono', monospace", opacity: 0.8 }}>
+            // SUBJECT_IDENTIFIED ■
+          </span>
+        </div>
+      </div>
+
       <style>{`
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
+        .hero-container { 
+          flex-direction: row; 
+          padding: 0 5%; 
+        }
+
+        @media (max-width: 1024px) {
+          .hero-container {
+            flex-direction: column-reverse;
+            padding: 4rem 2rem;
+            text-align: center;
+            justify-content: center;
+            gap: 3.5rem;
+          }
+          .hero-text-content { 
+            align-items: center; 
+          }
+          .hero-description {
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .role-text, .btn-container, .social-container { 
+            justify-content: center; 
+          }
+          /* Slightly smaller image for mobile to ensure fit */
+          .hero-image-wrapper div { 
+            width: 280px !important; 
+            height: 320px !important; 
+          }
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes scanSweep {
+          0% { top: 0%; opacity: 0.6; }
+          48% { opacity: 0.6; }
+          50% { top: 100%; opacity: 0; }
+          51% { top: 0%; opacity: 0; }
+          52% { opacity: 0.6; }
+          100% { top: 100%; opacity: 0.6; }
         }
       `}</style>
     </section>
