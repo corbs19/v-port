@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const roles = ["Web Developer", "Frontend Developer", "Full Stack Developer"];
+const roles = ["Web Developer", "Frontend Developer", "Data Encoder"];
 
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
@@ -118,7 +118,7 @@ export default function Hero() {
               clipPath: "polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))",
             }}
           >
-            My CV
+            My Resume
           </a>
         </div>
 
