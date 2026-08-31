@@ -25,92 +25,93 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="py-20 px-4 transition-colors duration-500, text-center"
+      className="py-20 px-4 text-center transition-colors duration-500"
       style={{ background: "var(--bg)", scrollMarginTop: "70px" }}
     >
-      <h2 style={{
-        
-              fontFamily: "'Cormorant Garamond', Georgia,serif",
-              fontSize: "clamp(36px, 3vw, 56px)",
-              fontWeight: 900, lineHeight: 0.92, textTransform: "uppercase",
-              color: "var(--text-h, #f5f0e8)", margin: "0 0 22px",
-            }}>
-              Projects<br />
-            </h2>
-            <div style={{
-              width: "36px", height: "0px",
-              background: "var(--accent, #c8915a)", opacity: 0.35,
-            }} />
-      <div
-        className="w-16 h-1 rounded-full mx-auto mb-12"
+      <h2
+        style={{
+          fontFamily: "'Fraunces', Georgia, serif",
+          fontSize: "clamp(2rem, 3.5vw, 3rem)",
+          fontWeight: 500,
+          color: "var(--text-h)",
+          margin: "0 0 0.75rem",
+        }}
+      >
+        Projects
+      </h2>
+       <div
+        className="w-16 h-1 rounded-full mx-auto mb-10"
         style={{ background: "var(--accent)", marginTop: "4px" }}
       />
+      <p
+        style={{
+          fontFamily: "Fraunces', Georgia, serif",
+          color: "var(--text-muted)",
+          maxWidth: "480px",
+          margin: "0 auto 3rem",
+        }}
+      >
+        A selection of things I've built and worked on.
+      </p>
 
       {loading && (
-        <p className="text-center" style={{ color: "var(--text)" }}>
+        <p style={{ color: "var(--text-muted)", fontFamily: "'Inter', system-ui, sans-serif" }}>
           Loading projects...
         </p>
       )}
       {!loading && projects.length === 0 && (
-        <p className="text-center" style={{ color: "var(--text)" }}>
-          No projects yet. Check back soon!
+        <p style={{ color: "var(--text-muted)", fontFamily: "'Inter', system-ui, sans-serif" }}>
+          No projects yet. Check back soon.
         </p>
       )}
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {projects.map((project) => (
           <div
             key={project.id}
-            className="rounded-xl flex flex-col overflow-hidden transition-all duration-300 group"
-            style={{
-              background: "rgba(200,149,108,0.07)",
-              border: "1px solid rgba(200,149,108,0.2)",
-              boxShadow: "0 2px 12px rgba(120,80,40,0.06)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = "0 6px 24px rgba(120,80,40,0.15)";
-              e.currentTarget.style.borderColor = "rgba(200,149,108,0.5)";
-              e.currentTarget.style.transform = "translateY(-3px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = "0 2px 12px rgba(120,80,40,0.06)";
-              e.currentTarget.style.borderColor = "rgba(200,149,108,0.2)";
-              e.currentTarget.style.transform = "translateY(0)";
-            }}
+            className="card text-left flex flex-col overflow-hidden"
+            style={{ padding: 0 }}
           >
-            {/* Square image */}
-            <div
-              className="w-full overflow-hidden"
-              style={{ aspectRatio: "1 / 1" }}
-            >
+            {/* Image */}
+            <div className="w-full overflow-hidden" style={{ aspectRatio: "16 / 10" }}>
               {project.image_url ? (
                 <img
                   src={project.image_url}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover"
+                  style={{ display: "block" }}
                 />
               ) : (
                 <div
                   className="w-full h-full flex items-center justify-center"
-                  style={{ background: "rgba(200,149,108,0.1)" }}
+                  style={{ background: "var(--bg-secondary)" }}
                 >
-                  <span style={{ fontSize: "32px", opacity: 0.3 }}>🖼</span>
+                  <span style={{ color: "var(--text-muted)", fontSize: "0.85rem", fontFamily: "'Inter', system-ui, sans-serif" }}>
+                    No preview
+                  </span>
                 </div>
               )}
             </div>
 
             {/* Card body */}
-            <div className="p-4 flex flex-col flex-1">
+            <div className="p-5 flex flex-col flex-1">
               <h3
-                className="text-sm font-bold mb-1 leading-tight"
-                style={{ color: "var(--accent)" }}
+                className="mb-2 leading-snug"
+                style={{
+                  color: "var(--text-h)",
+                  fontFamily: "'Fraunces', Georgia, serif",
+                  fontWeight: 500,
+                  fontSize: "1.15rem",
+                }}
               >
                 {project.title}
               </h3>
               <p
-                className="text-xs mb-3 flex-1"
+                className="mb-4 flex-1"
                 style={{
-                  color: "var(--text)",
+                  color: "var(--text-muted)",
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                  fontSize: "0.875rem",
                   lineHeight: 1.6,
                   display: "-webkit-box",
                   WebkitLineClamp: 3,
@@ -123,15 +124,17 @@ export default function Projects() {
 
               {/* Tags */}
               {project.tags && project.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1 mb-4">
+                <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] px-2 py-0.5 rounded-full font-medium"
+                      className="px-2 py-0.5 rounded"
                       style={{
-                        background: "rgba(200,149,108,0.12)",
-                        color: "var(--accent)",
-                        border: "1px solid rgba(200,149,108,0.2)",
+                        background: "var(--bg-secondary)",
+                        color: "var(--text-muted)",
+                        border: "1px solid var(--border-color)",
+                        fontFamily: "'Inter', system-ui, sans-serif",
+                        fontSize: "0.7rem",
                       }}
                     >
                       {tag}
@@ -141,25 +144,23 @@ export default function Projects() {
               )}
 
               {/* Divider */}
-              <div
-                className="mb-4"
-                style={{
-                  height: "1px",
-                  background: "rgba(200,149,108,0.12)",
-                }}
-              />
+              <div className="mb-4" style={{ height: "1px", background: "var(--border-color)" }} />
 
-              {/* Links - COLUMN LAYOUT */}
-              <div className="flex flex-col gap-2.5">
+              {/* Links */}
+              <div className="flex flex-wrap gap-x-5 gap-y-2">
                 {project.live_url && (
                   <a
                     href={project.live_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[10px] font-bold uppercase tracking-widest transition-opacity hover:opacity-60 w-fit"
-                    style={{ color: "var(--accent)" }}
+                    style={{
+                      color: "var(--accent)",
+                      fontFamily: "'Inter', system-ui, sans-serif",
+                      fontSize: "0.8rem",
+                      fontWeight: 500,
+                    }}
                   >
-                    Live Demo →
+                    Live demo
                   </a>
                 )}
                 {project.pdf_url && (
@@ -167,10 +168,14 @@ export default function Projects() {
                     href={project.pdf_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[10px] font-bold uppercase tracking-widest transition-opacity hover:opacity-60 w-fit"
-                    style={{ color: "var(--accent)" }}
+                    style={{
+                      color: "var(--accent)",
+                      fontFamily: "'Inter', system-ui, sans-serif",
+                      fontSize: "0.8rem",
+                      fontWeight: 500,
+                    }}
                   >
-                    View File →
+                    View file
                   </a>
                 )}
                 {project.github_url && (
@@ -178,10 +183,14 @@ export default function Projects() {
                     href={project.github_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[10px] font-medium uppercase tracking-widest transition-opacity hover:opacity-60 w-fit"
-                    style={{ color: "var(--text-muted)" }}
+                    style={{
+                      color: "var(--text-muted)",
+                      fontFamily: "'Inter', system-ui, sans-serif",
+                      fontSize: "0.8rem",
+                      fontWeight: 500,
+                    }}
                   >
-                    GitHub →
+                    GitHub
                   </a>
                 )}
               </div>

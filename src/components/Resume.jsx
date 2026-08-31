@@ -21,21 +21,20 @@ export default function Resume() {
   return (
     <section
       id="resume"
-      className="py-20 px-4 transition-colors duration-500, text-center"
+      className="py-20 px-4 text-center transition-colors duration-500"
       style={{ background: "var(--bg)", scrollMarginTop: "70px" }}
     >
-      <h2 style={{
-        
-              fontFamily: "'Cormorant Garamond', Georgia,serif",
-              fontSize: "clamp(36px, 3vw, 56px)",
-              fontWeight: 900, lineHeight: 0.92, textTransform: "uppercase",
-              color: "var(--text-h, #f5f0e8)", margin: "0 0 22px",
-            }}>
-              Resume<br />
-            </h2>
-     
-
-      {/* Accent line */}
+      <h2
+        style={{
+          fontFamily: "'Fraunces', Georgia, serif",
+          fontSize: "clamp(2rem, 3.5vw, 3rem)",
+          fontWeight: 500,
+          color: "var(--text-h)",
+          margin: "0 0 0.75rem",
+        }}
+      >
+        Resume
+      </h2>
       <div
         className="w-16 h-1 rounded-full mx-auto mb-10"
         style={{ background: "var(--accent)", marginTop: "4px" }}
@@ -43,7 +42,11 @@ export default function Resume() {
 
       <p
         className="mb-10 max-w-md mx-auto leading-relaxed"
-        style={{ color: "var(--text-muted)", fontSize: "21px" }}
+        style={{
+          color: "var(--text-muted)",
+          fontFamily: "'Inter', system-ui, sans-serif",
+          fontSize: "1rem",
+        }}
       >
         Download my resume to see my full experience, education, and skills.
       </p>
@@ -51,8 +54,12 @@ export default function Resume() {
       {/* Button — only shown when resume exists in Supabase */}
       {loading ? (
         <div
-          className="inline-block px-8 py-3 rounded-lg font-semibold opacity-40"
-          style={{ background: "var(--accent)", color: "var(--bg)" }}
+          className="inline-block px-8 py-3 rounded-md font-medium opacity-40"
+          style={{
+            background: "var(--text-h)",
+            color: "var(--bg)",
+            fontFamily: "'Inter', system-ui, sans-serif",
+          }}
         >
           Loading…
         </div>
@@ -60,26 +67,31 @@ export default function Resume() {
         <a
           href={resumeUrl}
           download="Resume.pdf"
-          className="inline-block px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg"
+          className="inline-block px-8 py-3 rounded-md font-medium transition-opacity duration-200"
           style={{
-            background: "var(--accent)",
+            background: "var(--text-h)",
             color: "var(--bg)",
-            boxShadow: "0 0 15px var(--glow-color)",
+            fontFamily: "'Inter', system-ui, sans-serif",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = "0 0 25px var(--glow-color)";
-            e.currentTarget.style.transform = "translateY(-2px)";
+            e.currentTarget.style.opacity = "0.85";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = "0 0 15px";
-            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.opacity = "1";
           }}
         >
-          Download Resume
+          maniapao.cv
         </a>
       ) : (
         // Fallback: no resume uploaded yet
-        <p className="text-sm italic" style={{ color: "var(--text-muted)", opacity: 0.5 }}>
+        <p
+          className="text-sm"
+          style={{
+            color: "var(--text-muted)",
+            fontFamily: "'Inter', system-ui, sans-serif",
+            fontStyle: "italic",
+          }}
+        >
           Resume not available yet.
         </p>
       )}
