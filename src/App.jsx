@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom"; 
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { supabase } from "./lib/supabaseClient";
 
 import Navbar from "./components/Navbar";
@@ -14,6 +14,55 @@ import Footer from "./components/Footer";
 import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./components/AdminDashboard";
 import ParticleBackground from "./components/Particlebackground";
+
+// New: everything that needs to know the current route lives in here,
+// since useLocation() only works inside <BrowserRouter>.
+function SiteView({ darkMode, setDarkMode, onLoginClick }) {
+  const location = useLocation();
+  const hideNavbar = location.pathname === "/all-certificates";
+
+  return (
+    <>
+      {!hideNavbar && (
+        <Navbar
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+          onLoginClick={onLoginClick}
+        />
+      )}
+
+      <Routes>
+        <Route path="/" element={
+          <main>
+            <Hero />
+
+            <section id="certificates">
+              <Certificates />
+            </section>
+
+            <section id="skills">
+              <Skills />
+            </section>
+
+            <section id="projects">
+              <Projects />
+            </section>
+
+            <Resume />
+
+            <section id="contact">
+              <Contact />
+            </section>
+          </main>
+        } />
+
+        <Route path="/all-certificates" element={<AllCertificates />} />
+      </Routes>
+
+      <Footer />
+    </>
+  );
+}
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -36,13 +85,13 @@ function App() {
     <BrowserRouter>
       <div className={darkMode ? "dark" : ""}>
         <div className="relative min-h-screen transition-colors duration-500 bg-[var(--bg)] text-[var(--text)]">
-          
+
           {/* Background Layer (z-0) */}
           <ParticleBackground />
-          
+
           {/* Content Layer (z-10) */}
           <div className="relative z-10">
-            
+
             {/* Modals & Admin Overlays (Highest z-index) */}
             {showLoginModal && !isAdmin && (
               <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-[200] px-4">
@@ -55,45 +104,11 @@ function App() {
                 <AdminDashboard setAdmin={setAdmin} />
               </div>
             ) : (
-              <>
-                {/* Regular Site View */}
-                <Navbar
-                  darkMode={darkMode}
-                  setDarkMode={setDarkMode}
-                  onLoginClick={() => setShowLoginModal(true)}
-                />
-                
-                <Routes>
-                  <Route path="/" element={
-                    <main>
-                      <Hero />
-                      
-                      {/* Anchor Targets defined here for maximum reliability */}
-                      <section id="certificates">
-                        <Certificates />
-                      </section>
-
-                      <section id="skills">
-                        <Skills />
-                      </section>
-
-                      <section id="projects">
-                        <Projects />
-                      </section>
-
-                      <Resume />
-
-                      <section id="contact">
-                        <Contact />
-                      </section>
-                    </main>
-                  } />
-                  
-                  <Route path="/all-certificates" element={<AllCertificates />} />
-                </Routes>
-
-                <Footer />
-              </>
+              <SiteView
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+                onLoginClick={() => setShowLoginModal(true)}
+              />
             )}
           </div>
         </div>
