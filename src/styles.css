@@ -47,12 +47,12 @@ html, body {
   --cursor-color: #b99b76;
 }
 
-/* ── Base ── */
+/* ── Base: subtle overall page tone (sections now carry their own gradients) ── */
 body {
-  background-color: var(--bg);
+  background: var(--bg);
   color: var(--text);
   font-family: 'Inter', system-ui, sans-serif;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 /* ── Typography ── */
@@ -197,9 +197,43 @@ input:focus, textarea:focus, select:focus {
   border-color: var(--accent);
 }
 
-/* ── Sections ── */
+/* ── Sections: each gets its own gradient instead of one flat page-wide fade ── */
 section {
-  background: transparent !important;
+  background: var(--bg) !important; /* fallback */
+  position: relative;
+}
+
+/* Alternate gradient direction/tone by position in the page */
+section:nth-of-type(odd) {
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--accent) 4%, var(--bg)) 0%,
+    var(--bg) 55%,
+    color-mix(in srgb, var(--accent) 8%, var(--bg)) 100%
+  ) !important;
+}
+
+section:nth-of-type(even) {
+  background: linear-gradient(
+    200deg,
+    var(--bg-secondary) 0%,
+    color-mix(in srgb, var(--accent) 5%, var(--bg-secondary)) 45%,
+    var(--bg) 100%
+  ) !important;
+}
+
+/* Hero / first section — more saturated to anchor the top of the page */
+section:first-of-type {
+  background: radial-gradient(
+    ellipse 120% 80% at 50% -10%,
+    color-mix(in srgb, var(--accent) 14%, var(--bg)) 0%,
+    var(--bg) 60%
+  ) !important;
+}
+
+/* Soft seam so gradients don't hard-cut between sections */
+section + section {
+  box-shadow: 0 -60px 60px -60px color-mix(in srgb, var(--bg) 80%, transparent) inset;
 }
 
 /* ── Footer ── */
